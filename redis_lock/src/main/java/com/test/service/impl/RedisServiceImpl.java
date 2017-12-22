@@ -20,9 +20,9 @@ public class RedisServiceImpl implements RedisService{
 	 /**
      * 前缀
      */
-    private static final String KEY_PREFIX_VALUE = "info:xiaomo:value:";
-    private static final String KEY_PREFIX_SET = "info:xiaomo:set:";
-    private static final String KEY_PREFIX_LIST = "info:xiaomo:list:";
+    private static final String KEY_PREFIX_VALUE = "key:prefix:value:";
+    private static final String KEY_PREFIX_SET = "key:prefix:set:";
+    private static final String KEY_PREFIX_LIST = "key:prefix:list:";
     private final RedisTemplate<String, String> redisTemplate;
     /**
      * 日志记录

@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true">
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
 
+    <!--输出文件位置,tomcat容器的根目录-->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder charset="UTF-8">
-            <pattern>[%thread] %highlight(%-5level) %cyan(%logger{15}) - %highlight(%msg) %n</pattern>
+        <encoder>
+            <pattern>.%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+	        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			    <level>TRACE</level>
+			</filter>
+    </appender>
+
+<!-- 
+    <appender name="allRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            daily rollover
+            <FileNamePattern>log/all/%d{yyyy-MM-dd}.log</FileNamePattern>
+            keep 30 days' worth of history
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender> -->
+
+    <appender name="serverRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <FileNamePattern>log/server/%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
-    <root level="INFO">
+    <root level="info">
         <appender-ref ref="stdout"/>
+        <appender-ref ref="serverRollingFileAppender"/>
     </root>
-
-    <logger name="info.ll" level="info"/>
 
 </configuration>

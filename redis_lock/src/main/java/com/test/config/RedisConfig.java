@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect; 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -11,16 +13,22 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+
+import redis.clients.jedis.JedisPoolConfig;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
+	
+
 	/**
 	 * 生成key的策略
 	 */
@@ -48,7 +56,6 @@ public class RedisConfig extends CachingConfigurerSupport {
         RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
         return rcm;
     }
-    
     /**
      * RedisTemplate配置
      */
